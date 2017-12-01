@@ -15,7 +15,7 @@ namespace Behaviour
         void Start()
         {
             currentState = new Normal();
-            rend = GetComponent<Renderer>();
+            rend = GetComponentInChildren<Renderer>();
         }
 
         // Update is called once per frame
@@ -52,7 +52,7 @@ namespace Behaviour
 
         public override void Execute(Behaviour human)
         {
-            if (Input.anyKey) human.ChangeState(new Religious());
+            if (Input.anyKeyDown) human.ChangeState(new Religious());
         }
 
         public override void Exit(Behaviour human)
@@ -70,7 +70,7 @@ namespace Behaviour
 
         public override void Execute(Behaviour human)
         {
-            if (Input.anyKey) human.ChangeState(new Normal());
+            if (Input.anyKeyDown) human.ChangeState(new Normal());
         }
 
         public override void Exit(Behaviour human)
