@@ -20,6 +20,7 @@ public class CameraMovement2 : MonoBehaviour
     private bool isPanning;
     private float yRotation;
     private float xRotation;
+    private bool isRotating;
 
 
 
@@ -38,23 +39,28 @@ public class CameraMovement2 : MonoBehaviour
         {
             isPanning = true;
         }
+        if (Input.GetMouseButtonDown(2))
+        {
+            isRotating = true;
+        }
+
         //move camera on X & Y with WASD or bij panning at the side of the screen
         wasdPos = transform.position;
         initialTransform = transform.localEulerAngles;
         transform.eulerAngles = new Vector3(0, initialTransform.y, initialTransform.z);
-        if ((Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness) && !isPanning)
+        if ((Input.GetKey("w") || (Input.mousePosition.y >= Screen.height - panBorderThickness && !isRotating)) && !isPanning)
         {
             wasdPos += transform.forward * wasdSpeed * Time.deltaTime;
         }
-        if ((Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness) && !isPanning)
+        if ((Input.GetKey("s") || (Input.mousePosition.y <= panBorderThickness && !isRotating)) && !isPanning)
         {
             wasdPos += -transform.forward * wasdSpeed * Time.deltaTime;
         }
-        if ((Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness) && !isPanning)
+        if ((Input.GetKey("a") || (Input.mousePosition.x <= panBorderThickness && !isRotating)) && !isPanning)
         {
             wasdPos += -transform.right * wasdSpeed * Time.deltaTime;
         }
-        if ((Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness) && !isPanning)
+        if ((Input.GetKey("d") || (Input.mousePosition.x >= Screen.width - panBorderThickness && !isRotating)) && !isPanning)
         {
             wasdPos += transform.right * wasdSpeed * Time.deltaTime;
         }
@@ -66,11 +72,15 @@ public class CameraMovement2 : MonoBehaviour
         transform.eulerAngles = initialTransform;
 
         //cancel on button release
+
+        if (!Input.GetMouseButton(2))
+        {
+            isRotating = false;
+        }
         if (!Input.GetMouseButton(0))
         {
             isPanning = false;
         }
-
         //move camera on X & Y with mouse
         else if (isPanning && Input.mousePosition != initialMousePosition)
         {
