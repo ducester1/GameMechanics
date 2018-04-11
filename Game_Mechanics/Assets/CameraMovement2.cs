@@ -4,25 +4,34 @@ using UnityEngine;
 
 public class CameraMovement2 : MonoBehaviour
 {
+    public float scrollSpeed;
+    public float rotationSpeed;
+    public float panSpeed;
+    public float minZoom;
+    public float maxZoom;
+
     private Vector3 mouseOrigin;
-    private bool isPanning;
     private Vector3 currentPosition;
-    public float panSpeed = 10;
     private Vector3 initialPosition;
+    private Vector3 initialRotation;
+    private bool isPanning;
     private float yRotation;
     private float xRotation;
-    public float rotationSpeed = 10;
-    private Vector2 initialRotation;
+
+
+
 
     // Use this for initialization
     void Start()
     {
-
+        initialPosition = transform.position;
+        initialRotation = transform.localEulerAngles;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(initialRotation);
         currentPosition = transform.position;
         float scrollAxis = Input.GetAxis("Mouse ScrollWheel");
         if (Input.GetMouseButtonDown(0))
@@ -54,9 +63,11 @@ public class CameraMovement2 : MonoBehaviour
             transform.localEulerAngles = new Vector3(yRotation + initialRotation.x, xRotation + initialRotation.y, 0);
         }
         //zoom with scroll
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        if (Input.GetAxis("Mouse ScrollWheel") != 0 && transform.position.y >= minZoom && transform.position.y <= maxZoom)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * 10000f * scrollAxis, Space.Self);
+            initialPosition = transform.position;
+            transform.Translate(Vector3.forward * Time.deltaTime * scrollSpeed * scrollAxis, Space.Self);
+            if (transform.position.y < minZoom || transform.position.y > maxZoom) transform.position = initialPosition;
             initialPosition = transform.position;
         }
     }
