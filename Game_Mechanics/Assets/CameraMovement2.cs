@@ -16,6 +16,7 @@ public class CameraMovement2 : MonoBehaviour
     private Vector3 initialRotation;
     private Vector3 initialMousePosition;
     private Vector3 wasdPos;
+    private Vector3 initialTransform;
     private bool isPanning;
     private float yRotation;
     private float xRotation;
@@ -39,6 +40,8 @@ public class CameraMovement2 : MonoBehaviour
         }
         //move camera on X & Y with WASD or bij panning at the side of the screen
         wasdPos = transform.position;
+        initialTransform = transform.localEulerAngles;
+        transform.eulerAngles = new Vector3(0, initialTransform.y, initialTransform.z);
         if ((Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness) && !isPanning)
         {
             wasdPos += transform.forward * wasdSpeed * Time.deltaTime;
@@ -58,8 +61,9 @@ public class CameraMovement2 : MonoBehaviour
         if (wasdPos != transform.position)
         {
             wasdPos.y = transform.position.y;
-            transform.position = wasdPos;
+            transform.localPosition = wasdPos;
         }
+        transform.eulerAngles = initialTransform;
 
         //cancel on button release
         if (!Input.GetMouseButton(0))
@@ -79,7 +83,6 @@ public class CameraMovement2 : MonoBehaviour
         //rotate camera with mousewheel click
         if (Input.GetMouseButton(2))
         {
-            Debug.Log(yRotation);
             yRotation -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
             yRotation = Mathf.Clamp(yRotation, -60, 30);
             xRotation += Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
