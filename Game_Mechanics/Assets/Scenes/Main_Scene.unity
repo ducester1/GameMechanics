@@ -130,10 +130,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 5000
-  rotationSpeed: 30
+  rotationSpeed: 100
   panSpeed: 100
+  wasdSpeed: 100
   minZoom: 10
   maxZoom: 100
+  panBorderThickness: 0
 --- !u!1 &322604569
 GameObject:
   m_ObjectHideFlags: 0

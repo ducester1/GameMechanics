@@ -41,22 +41,23 @@ public class CameraMovement2 : MonoBehaviour
         wasdPos = transform.position;
         if ((Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness) && !isPanning)
         {
-            wasdPos += Vector3.forward * wasdSpeed * Time.deltaTime;
+            wasdPos += transform.forward * wasdSpeed * Time.deltaTime;
         }
         if ((Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness) && !isPanning)
         {
-            wasdPos += Vector3.back * wasdSpeed * Time.deltaTime;
+            wasdPos += -transform.forward * wasdSpeed * Time.deltaTime;
         }
         if ((Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness) && !isPanning)
         {
-            wasdPos += Vector3.left * wasdSpeed * Time.deltaTime;
+            wasdPos += -transform.right * wasdSpeed * Time.deltaTime;
         }
         if ((Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness) && !isPanning)
         {
-            wasdPos += Vector3.right * wasdSpeed * Time.deltaTime;
+            wasdPos += transform.right * wasdSpeed * Time.deltaTime;
         }
         if (wasdPos != transform.position)
         {
+            wasdPos.y = transform.position.y;
             transform.position = wasdPos;
         }
 
