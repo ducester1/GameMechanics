@@ -35,7 +35,7 @@ public class CameraMovement2 : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             isPanning = true;
         }
@@ -77,7 +77,7 @@ public class CameraMovement2 : MonoBehaviour
         {
             isRotating = false;
         }
-        if (!Input.GetMouseButton(0))
+        if (!Input.GetMouseButton(1))
         {
             isPanning = false;
         }
